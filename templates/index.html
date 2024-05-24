@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <title>University Chatbot</title>
+  <style>
+
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 400px;
+      margin: auto;
+      border: 1px solid #dedede;
+      background-color: #fff;
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      background-color: #4e8cff;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      position: relative;
+    }
+
+    .chat-header img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+    }
+
+    .chat-header h2 {
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
+      line-height: 50px;
+    }
+
+    .chat-box {
+      padding: 10px;
+      height: 540px;
+      overflow-y: auto;
+    }
+
+    .chat-box .message {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .chat-box .message .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    .chat-box .message .text {
+      max-width: 70%;
+      margin-left: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+    }
+
+    .chat-box .message.user .text {
+      background-color: #4e8cff;
+      color: #fff;
+      margin-left: auto;
+      margin-right: 10px;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+        min-width: 360px;
+      border-top: 1px solid #dedede;
+    }
+
+    .chat-input input {
+      margin-left: 7px;
+      flex: 1;
+      padding: 9px;
+        width: 126px;
+      margin-right: 7px;
+      border: 1px solid #dedede;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .chat-input button {
+      padding: 5px 7px;
+      background-color: #4e8cff;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .chat-input button:hover {
+      background-color: #1a70d1;
+    }
+
+    .toggle {
+      position: relative;
+      display: block;
+      width: 55px;
+      height: 28px;
+      margin-left: -6px;
+      padding: 3px;
+      border-radius: 50px;
+      cursor: pointer;
+      overflow: hidden;
+
+    }
+
+    .toggle-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+    .toggle-label {
+      position: relative;
+      display: block;
+      height: inherit;
+      font-size: 12px;
+      background: rgb(103, 96, 96);
+      border-radius: inherit;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .toggle-label:before,
+    .toggle-label:after {
+      position: absolute;
+      top: 50%;
+      color: black;
+      margin-top: -.5em;
+      line-height: 1;
+    }
+
+    .toggle-label:before {
+      content: attr(data-off);
+      right: 11px;
+      color: #fff;
+      text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+    }
+
+    .toggle-label:after {
+      content: attr(data-on);
+      left: 11px;
+      color: #fff;
+      text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+    }
+
+    .toggle-input:checked~.toggle-label {
+      background: green;
+    }
+
+    .toggle-input:checked~.toggle-label:before {
+      opacity: 0;
+    }
+
+    .toggle-input:checked~.toggle-label:after {
+      opacity: 1;
+    }
+
+    .toggle-handle {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 25px;
+      height: 26px;
+      background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+      border-radius: 50%;
+    }
+
+    .toggle-handle:before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -6px 0 0 -6px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .toggle-input:checked~.toggle-handle {
+      left: 32px;
+      box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Transition*/
+    .toggle-label,
+    .toggle-handle {
+      transition: All 0.3s ease;
+      -webkit-transition: All 0.3s ease;
+      -moz-transition: All 0.3s ease;
+      -o-transition: All 0.3s ease;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 8px 11px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+      margin-right: 2px;
+      border-radius: 30px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <h3>Mongolian National University of Education Chatbot</h3>
+    </div>
+    <div id="chat-box" class="chat-box">
+      <!-- Messages will be displayed here -->
+    </div>
+    <div class="chat-input">
+      <label class="toggle">
+        <input id="model" class="toggle-input" type="checkbox" />
+        <span class="toggle-label" data-off="AI" data-on="AI"></span>
+        <span class="toggle-handle"></span>
+
+      </label>
+      <label class="toggle">
+        <input id="school" class="toggle-input" type="checkbox" />
+        <span class="toggle-label" data-off="P.C" data-on="P.C"></span>
+        <span class="toggle-handle"></span>
+
+      </label>
+      <a href="/ch" class="button">ch</a>
+
+      <input type="text" id="message-input" placeholder="Type your message..." required>
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("message-input").addEventListener("keypress", function (event) {
+      if (event.keyCode === 13) {
+        sendMessage();
+        event.preventDefault();
+      }
+    });
+
+    function sendMessage() {
+      var input = document.getElementById("message-input");
+      var chatBox = document.getElementById("chat-box");
+      var model = document.getElementById("model")
+      var school = document.getElementById("school")
+      if (input.value.trim() !== '') {
+
+        var userDiv = document.createElement("div");
+        userDiv.classList.add("message", "user");
+        userDiv.innerHTML = `
+                <div class="text">${input.value}</div>
+            `;
+        chatBox.appendChild(userDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+
+        // 接下来调用get_info函数获取输入框的问题的答案。
+        var question = input.value
+        var model_status = model.checked
+        var school_mode = school.checked
+        if (model_status == true || school_mode == true) {
+          model_status = 1
+        }
+        else {
+          model_status = 0
+        }
+
+        get_info(model_status, question)
+
+        input.value = '';
+      }
+      else {
+        alert("请输入内容")
+      }
+
+    }
+
+    function cre_response(res) {
+      setTimeout(function () {
+        var chatBox = document.getElementById("chat-box");
+        var botDiv = document.createElement("div");
+        botDiv.classList.add("message", "bot");
+        botDiv.innerHTML = `
+                <div class="text">${res}</div>
+
+            `;
+        chatBox.appendChild(botDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 1000)
+    }
+
+    function get_info(model, question) {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ model: model, question: question })
+      };
+
+      fetch('/get_info', requestOptions)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+          // 处理获取到的数据
+          console.log(data);
+          cre_response(data['answer'])
+        })
+        .catch(error => {
+          // 处理错误
+          console.error('Error:', error);
+        });
+    }
+  </script>
+
+</body>
+
+</html>
