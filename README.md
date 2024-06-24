@@ -5,14 +5,16 @@
 
 
 
-使用说明：
-1.安装flask,waitress(wsgi服务器),elasticsearch,pymysql,langdetect等第三方库
-2.导入mysql数据库和es数据库。
-3.运行server.py
+ **使用说明：** 
+1. 这里是列表文本安装flask,waitress(wsgi服务器),elasticsearch,pymysql,langdetect等第三方库
+2. 这里是列表文本导入mysql数据库和es数据库。
+3. 运行server.py
 
-界面介绍：
+
+
+ **界面介绍：** 
+1. 主界面，输入中文调用gpt api进行回复，输入蒙古语调用mysql和es数据库回复
 ![](https://foruda.gitee.com/images/1719221104332129179/5d7cfc89_10193695.png "屏幕截图")
-主界面，输入中文调用gpt api进行回复，输入蒙古语调用mysql和es数据库回复
 
+2. 转换界面，可以实现蒙古语语音与汉语的互相转换
 ![](https://foruda.gitee.com/images/1719221239052362273/ef0d7a02_10193695.png "屏幕截图")
-转换界面，可以实现蒙古语语音与汉语的互相转换
