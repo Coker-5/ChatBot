@@ -11,6 +11,8 @@
 3.运行server.py
 
 界面介绍：
-![主界面，输入中文调用gpt api进行回复，输入蒙古语调用mysql和es数据库回复](https://foruda.gitee.com/images/1719221104332129179/5d7cfc89_10193695.png "屏幕截图")
+![](https://foruda.gitee.com/images/1719221104332129179/5d7cfc89_10193695.png "屏幕截图")
+主界面，输入中文调用gpt api进行回复，输入蒙古语调用mysql和es数据库回复
 
-![转换界面，可以实现蒙古语语音与汉语的互相转换](https://foruda.gitee.com/images/1719221239052362273/ef0d7a02_10193695.png "屏幕截图")
+![](https://foruda.gitee.com/images/1719221239052362273/ef0d7a02_10193695.png "屏幕截图")
+转换界面，可以实现蒙古语语音与汉语的互相转换
