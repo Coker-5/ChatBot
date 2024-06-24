@@ -13,8 +13,9 @@
 
 
  **界面介绍：** 
-1. 主界面，输入中文调用gpt api进行回复，输入蒙古语调用mysql和es数据库回复
+1. 主界面（http://localhost:5000），输入中文调用gpt api进行回复，输入蒙古语调用mysql和es数据库回复
 ![](https://foruda.gitee.com/images/1719221104332129179/5d7cfc89_10193695.png "屏幕截图")
 
-2. 转换界面，可以实现蒙古语语音与汉语的互相转换
+
+2. 转换界面（http://localhost:5000/ch），可以实现蒙古语语音与汉语的互相转换
 ![](https://foruda.gitee.com/images/1719221239052362273/ef0d7a02_10193695.png "屏幕截图")
