@@ -4,7 +4,8 @@ from elasticsearch import Elasticsearch
 from flask import Flask, request, render_template, jsonify, send_from_directory
 import pymysql
 from langdetect import detect
-import openai
+from openai import OpenAI
+
 
 app = Flask(__name__)
 
@@ -17,8 +18,8 @@ conn = pymysql.connect(
 
 es = Elasticsearch(['127.0.0.1'], port=9200)
 
-api_key = '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'
-openai.api_key = api_key
+client = OpenAI(api_key="sk-f635508793624354b4667fcf1454c55e", base_url="https://api.deepseek.com")
+
 
 dialogue_history = []
 
@@ -65,16 +66,16 @@ def elastic_search(question):
 
 def search_in_ai(question):
     user_input = question
-
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+    response = client.chat.completions.create(
+        model="deepseek-chat",
         messages=[
                      {"role": "system", "content": "You are a helpful assistant."},
                      {"role": "user", "content": user_input},
-                 ] + dialogue_history
+                 ] + dialogue_history,
+        stream=False
     )
 
-    bot_reply = response['choices'][0]['message']['content']
+    bot_reply = response.choices[0].message.content
 
     dialogue_history.append({"role": "user", "content": user_input})
     dialogue_history.append({"role": "system", "content": bot_reply})
@@ -86,7 +87,7 @@ def text_to_speech(text):
     url = "https://api.chimege.com/v1.2/synthesize"
     headers = {
         'Content-Type': 'plain/text',
-        'Token': '15318bcb34a9ac07eabd8a98470a6aa1fcf4d22d471fd482404a8ab9ae2e3382',
+        'Token': 'a529b5fbed7aeccc3f33ec0793a026f0bc8ea728b6cb2eb6718f9f7a3f431583',
     }
 
     r = requests.post(
@@ -111,7 +112,7 @@ def speech_to_text(audio):
     r = requests.post("https://api.chimege.com/v1.2/transcribe", data=audio, headers={
         'Content-Type': 'application/octet-stream',
         'Punctuate': 'true',
-        'Token': '3ef4403852dfec3020f793df33d683cb13bedae59bafe6c89a3186496e3fbe28',
+        'Token': 'ce3f746dbc231e745a1bec1183b1b2c9dcc15f6d17043bf1e913c32c3a9f6382',
     })
     message = r.content.decode("utf-8")
 
