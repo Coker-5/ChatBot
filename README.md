@@ -6,8 +6,8 @@
 
 
  **使用说明：** 
-1. 这里是列表文本安装flask,waitress(wsgi服务器),elasticsearch,pymysql,langdetect等第三方库
-2. 这里是列表文本导入mysql数据库和es数据库。
+1. 安装flask,waitress(wsgi服务器),elasticsearch,pymysql,langdetect等第三方库
+2. 导入mysql数据库和es数据库。
 3. 运行server.py
 
 
